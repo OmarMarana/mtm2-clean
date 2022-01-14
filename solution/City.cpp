@@ -38,7 +38,7 @@ namespace mtm
         citizens.end(); ++i)
         {
            if((*i)->getId() == employee_id)
-           {  
+           {
                employee_1 = dynamic_cast<Employee*>(*i);
                if(employee_1 == nullptr)
                {
@@ -57,11 +57,11 @@ namespace mtm
         citizens.end(); ++i)
         {
            if((*i)->getId() == employee_id)
-           {  
+           {
                 return true;
            }
         }
-        return false;  
+        return false;
     }
 
     Manager* City::doesManagerExist(std::set<Citizen* , CompareCitizens>& citizens, int manager_id)
@@ -71,7 +71,7 @@ namespace mtm
         citizens.end(); ++i)
         {
            if((*i)->getId() == manager_id)
-           {  
+           {
                manager_1 = dynamic_cast<Manager*>(*i);
                if(manager_1 == nullptr)
                {
@@ -85,46 +85,43 @@ namespace mtm
     }
 
     void City::addEmployee(int id,std::string first_name,std::string last_name,int year_of_birth)
-    { 
-        Employee* new_employee = new Employee(id, first_name, last_name, year_of_birth);
-        
+    {
         for(std::set<Citizen*, mtm::CompareCitizens>::iterator i = citizens.begin(); i !=
         citizens.end(); ++i)
         {
            if((*i)->getId() == id)
-           {   
+           {
                throw CitizenAlreadyExists();
            }
-        } 
+        }
+        Employee* new_employee = new Employee(id, first_name, last_name, year_of_birth);
         citizens.insert(new_employee);
     }
 
     void City::addManager(int id,std::string first_name,std::string last_name,int year_of_birth)
     {
-        Manager* new_manager = new Manager(id,first_name,last_name ,year_of_birth);
-
         for(std::set<Citizen*, mtm::CompareCitizens>::iterator i = citizens.begin(); i !=
         citizens.end(); ++i)
         {
            if((*i)->getId() == id)
-           {  
+           {
                throw CitizenAlreadyExists();
            }
-        } 
-        
+        }
+        Manager* new_manager = new Manager(id,first_name,last_name ,year_of_birth);
         citizens.insert(new_manager);
     }
-    
+
 
     void City::addFaculty(int id,  Skill skill, int acquired_points, mtm::Condition* condition)
     {
         Faculty<Condition> faculty(id, skill, acquired_points, condition);
-        
+
         if(faculties.find(faculty) != faculties.end())
         {
             throw FacultyAlreadyExists();
         }
-          
+
         faculties.insert(faculty);
     }
 
@@ -142,7 +139,7 @@ namespace mtm
 
     void City::teachAtFaculty(int employee_id, int faculty_id)
     {
-        
+
         Employee* employee = doesEmployeeExist(citizens, employee_id);
 
         FacultyHelperCondition c1 ;
@@ -151,16 +148,16 @@ namespace mtm
         {
             throw FacultyDoesNotExist();
         }
-        
+
         (*(faculties.find(faculty))).teach(employee);
-        
+
     }
-    
+
 
     void City::hireManagerAtWorkplace(int manager_id, int workplace_id)
     {
         Manager* manager = doesManagerExist(citizens, manager_id);
-       
+
         std::shared_ptr<Workplace> work_place(new Workplace(workplace_id,"F",0,0));
         if(workplaces.find(work_place) == workplaces.end())
         {
@@ -169,7 +166,7 @@ namespace mtm
 
 
         (*(workplaces.find(work_place)))->hireManager(manager);
-      
+
     }
 
     void City::fireEmployeeAtWorkplace(int employee_id, int manager_id, int workplace_id)
@@ -186,9 +183,9 @@ namespace mtm
         (*(workplaces.find(work_place)))->fireEmployee(employee_id, manager_id);
 
     }
-    
+
     void City::fireManagerAtWorkplace(int manager_id, int workplace_id)
-    {        
+    {
         Manager* manager = doesManagerExist(citizens, manager_id);
 
         std::shared_ptr<Workplace> work_place(new Workplace(workplace_id,"F",0,0));
@@ -198,7 +195,7 @@ namespace mtm
         }
 
         (*(workplaces.find(work_place)))->fireManager(manager_id);
-        
+
         manager->setSalary(-((*(workplaces.find(work_place)))->getManagersSalary()));
         manager->getEmployees().clear();
     }
@@ -228,11 +225,11 @@ namespace mtm
                     count++;
                     manager->printShort(stream);
                 }
-            }    
+            }
         }
         return count;
     }
-    
+
     bool City::isWorkingInTheSameWorkplace(int employee_id1,int employee_id2)
     {
         doesEmployeeExist(citizens, employee_id1);
@@ -252,12 +249,12 @@ namespace mtm
             }
         }
 
-        return working_at_the_same_place;  
+        return working_at_the_same_place;
     }
 
     void City::printAllEmployeesWithSkill(std::ostream& stream, int skill_id)
     {
-       Employee* employee_1; 
+       Employee* employee_1;
        for(std::set<Citizen*, mtm::CompareCitizens>::iterator i = citizens.begin(); i !=
        citizens.end(); ++i)
        {
@@ -271,6 +268,6 @@ namespace mtm
            }
        }
 
-    }        
+    }
 }
 
