@@ -16,8 +16,6 @@ namespace mtm
             bool hired;
             std::set<Employee*, mtm::CompareEmployee> employees; 
 
-            std::vector<std::shared_ptr<Employee>> empls;
-
         public:
             
             Manager(int id,std::string first_name,std::string last_name,int year_of_birth,

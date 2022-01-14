@@ -18,9 +18,6 @@ namespace mtm
             int salary_of_managers;
             std::set<Manager*, CompareManager> managers;
 
-            std::vector<std::shared_ptr<Manager>> mngrs;
-            std::vector<std::shared_ptr<Employee>> empls;
-
         public:
         Workplace(int id,std::string name,int salary_of_employees,int salary_of_managers) : id(id),
         name(name), salary_of_employees(salary_of_employees), salary_of_managers(salary_of_managers) {}
